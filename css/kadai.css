@@ -1,0 +1,91 @@
+body{
+      /* background-color:#7494C0; */
+    background: url(../imgs/haikei.png) center center / cover no-repeat fixed;
+
+}
+
+.fixedContainer{
+    /* background-color: #7494C0; */
+    /* background: url(../imgs/haikei.png) center center / cover no-repeat fixed; */
+}
+
+h1{
+    position: fixed; /* ヘッダーを固定する */
+    top: 0; /* 上部から配置の基準位置を決める */
+    left: 10px; /* 左から配置の基準位置を決める */
+    width: 100%; /* ヘッダーの横幅を指定する */
+    height: 50px; /* ヘッダーの高さを指定する */
+    background: url(../imgs/haikei.png) center center / cover no-repeat fixed;
+
+}
+
+#uname{
+    display: none;
+    border: 3px solid navy;  /* 枠線 */
+    border-radius: 2em;   /* 角丸 */
+    padding: 0.6em;          /* 内側の余白量 */
+    background-color: snow;  /* 背景色 */
+    width: 20em;             /* 横幅 */
+    height: 15px;           /* 高さ */
+    font-size: 1em;          /* 文字サイズ */
+    line-height: 1.2;        /* 行の高さ */
+    position: fixed; /* ヘッダーを固定する */
+    top: 210px; /* 上部から配置の基準位置を決める */
+    left: 10px; /* 左から配置の基準位置を決める */
+    
+}
+
+.textlines{
+    border: 3px solid navy;  /* 枠線 */
+    border-radius: 2em;   /* 角丸 */
+    padding: 0.5em;          /* 内側の余白量 */
+    background-color: snow;  /* 背景色 */
+    width: 26em;             /* 横幅 */
+    height: 40px;           /* 高さ */
+    font-size: 1em;          /* 文字サイズ */
+    line-height: 1.2;        /* 行の高さ */
+    position: fixed; /* ヘッダーを固定する */
+    top: 220px; /* 上部から配置の基準位置を決める */
+    left: 50px; /* 左から配置の基準位置を決める */
+}
+
+#send{
+    background: snow;
+    border: none;
+    color: white;
+    font-size:1em;
+    font-weight:bold;
+    margin: auto;
+    padding-top: 7px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    /* box-shadow: 0 7px #4D1A06; */
+    border-color: gray;
+    border-radius: 20px;
+    width: 70px;
+    position: fixed; /* ヘッダーを固定する */
+    top: 230px; /* 上部から配置の基準位置を決める */
+    left: 425px; /* 左から配置の基準位置を決める */
+
+}
+
+
+ul{
+    display: flex;
+    position: fixed; /* ヘッダーを固定する */
+    top: 70px; /* 上部から配置の基準位置を決める */
+    left: 0; /* 左から配置の基準位置を決める */
+}
+
+li{
+    list-style: none;
+    border: 1px solid transparent;
+    border-radius: 2em;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+#output{
+    margin-top: 350px;
+}
+

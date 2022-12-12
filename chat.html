@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>磯野家 親戚LINE</title>
+<link rel="stylesheet" href="./css/kadai.css">
+<link rel="icon" href="./imgs/favicon.jpeg">
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+<div>
+    <div class="fixedContainer">
+        <h1>＜99+　　磯野家 親戚LINE</h1>
+            <div>
+                <ul>
+                    <li id="katsuo" class="imgs" data-img="0"><img src="./imgs/katsuo.png" width="100" alt=""></li>
+                    <li id="wakame" class="imgs" data-img="1"><img src="./imgs/wakame.png" width="100" alt=""></li>
+                    <li id="tarao" class="imgs" data-img="2"><img src="./imgs/tarao.png" width="100" alt=""></li>
+                    <li id="ikura" class="imgs" data-img="3"><img src="./imgs/ikura.png" width="100" alt=""></li>
+                </ul>
+            </div>
+            
+            <div class="input-container">
+                <div>
+                    <input type="text" id="uname" name="namae">
+                </div>
+                <div>
+                    <textarea class="textlines" name="" id="text" cols="30" rows="10" placeholder="command + Enter または ボタンクリックで送信"></textarea>
+                    <button id="send"><img src="./imgs/submit.png" width="30px" height="25px" alt=""></button>
+                </div>
+            </div>
+    </div>
+<!-- キャラを並べて表示 -->
+    
+    <div id="output"></div>
+</div>
+
+<!--/ コンテンツ表示画面 -->
+
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- JQuery -->
+
+
+<!--** 以下Firebase **-->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+        from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.14.0/firebase-database.js"; //「.min」を消す必要あり。
+  
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "",
+      authDomain: "fir-demo-ebd9b.firebaseapp.com",
+      projectId: "fir-demo-ebd9b",
+      storageBucket: "fir-demo-ebd9b.appspot.com",
+      messagingSenderId: "160571327179",
+      appId: "1:160571327179:web:6acc39510e0a15ba6e114e"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Realtime DBに接続
+    const db = getDatabase(app);
+    // Realtime DB内のchatを使う。chatという場所に格納する。
+    const dbRef = ref(db, "chat");
+
+    // アイコン処理
+    // これを入れるとチャットアプリが止まってしまうので非表示だが、これが肝なので入れたい。
+    // let d = 0;
+    // const img = ["katsuo.png", "wakame.png", "tarao.png", "ikura.png"]
+    // $(".imgs").on("click",function(){
+    //     d = $(this).attr("data-img");
+    // });
+
+    // $(imgs).on("click",function(){
+    // })
+    $("#katsuo").on("click", function(){
+        $("li").css("border", "transparent");
+        $(this).css("border", "2px solid navy");
+        document.getElementById("uname").value="カツオ"
+    });
+
+    $("#wakame").on("click", function(){
+        $("li").css("border", "transparent");
+        $(this).css("border", "2px solid navy");
+        document.getElementById("uname").value="ワカメ"
+    });
+
+    $("#tarao").on("click", function(){
+        $("li").css("border", "transparent");
+        $(this).css("border", "2px solid navy");
+        document.getElementById("uname").value="タラオ"
+    });
+
+    $("#ikura").on("click", function(){
+        $("li").css("border", "transparent");
+        $(this).css("border", "2px solid navy");
+        document.getElementById("uname").value="イクラ"
+    });
+
+
+    // #sendがクリックされたら、名前、本文情報を取得してconsoleに表示する。
+    $("#send").on("click", function(){
+        // const uname = $("#uname").val();
+        // const text = $("#text").val();
+        // console.log(uname, text);
+        // 以下のオブジェクト化をすれば、上記の2行はいらなくなる。
+        const msg = {
+            uname: $("#uname").val(),
+            text: $("#text").val(),
+        };
+
+        // newPostRef：只一つに決まるユニークキーを発行する。
+        // 新しいメッセージをnewPostRefに入れる。
+        const newPostRef = push(dbRef);
+        console.log("newPostRef: ", newPostRef);
+        set(newPostRef, msg);
+    });
+
+
+    // chatの中にあるデータを順番に取ってくる。
+    // data.valで、どんなデータを取ったか返してくれる。
+    // onChildAdded：データが追加されることが、このonChildAddedの発火条件になる。
+    // ページ読み込み時にデータを全部ぶっこ抜く、データを追加されると付け加える。
+    onChildAdded(dbRef, function(data){
+        const key = data.key
+        const msg = data.val();
+        if(msg.uname==""){
+            alert("アイコンを選んでください")
+        }
+        if(msg.uname=="カツオ"){
+            const h =`<p>${msg.uname}<br>${msg.text}</p>`;
+        $("#output").append(h);}
+    })
+
+    onChildAdded(dbRef, function(data){
+        const key = data.key
+        const msg = data.val();
+        if(msg.uname=="ワカメ"){
+            const h =`<p>${msg.uname}<br>${msg.text}</p>`;
+        $("#output").append(h);}
+    })
+
+    onChildAdded(dbRef, function(data){
+        const key = data.key
+        const msg = data.val();
+        if(msg.uname=="タラオ"){
+            const h =`<p>${msg.uname}<br>${msg.text}ですぅ〜</p>`;
+        $("#output").append(h);}
+    })
+
+    onChildAdded(dbRef, function(data){
+        const key = data.key
+        const msg = data.val();
+        if(msg.uname=="イクラ"){
+        const ikurachan = Math.floor(Math.random()*3)
+            if(ikurachan==0){
+            const h =`<p>${msg.uname}<br>ハーイ！</p>`;
+            $("#output").append(h);
+            }else if(ikurachan==1){
+            const h =`<p>${msg.uname}<br>チャーン！</p>`;
+            $("#output").append(h);
+            }else if(ikurachan==2){
+            const h =`<p>${msg.uname}<br>バブー</p>`;
+            $("#output").append(h);
+            }
+            }
+    })
+
+
+    // command + enterで送信。
+    // 代わりに送信ボタンが使えなくなった……。
+    $("#text").on("keydown", function(e){
+        console.log(e.keyCode);
+        if(event.metaKey){
+        if(e.keyCode === 13){
+            const msg = {
+            uname: $("#uname").val(),
+            text: $("#text").val()
+        };
+        
+        const newPostRef = push(dbRef);
+        set(newPostRef, msg);
+        }
+    }})
+
+  </script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
